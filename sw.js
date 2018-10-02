@@ -4,12 +4,12 @@ console.log('Service Worker: Registered');
 const cacheFiles = [
   '/',
   '/index.html',
-  '/restarant.html',
+  '/restaurant.html',
   '/css/styles.css',
   '/js/dbhelper.js',
   '/js/main.js',
   '/js/restaurant_info.js',
-  '/data/restarants.json',
+  '/data/restaurants.json',
   '/img/1.jpg',
   '/img/2.jpg',
   '/img/3.jpg',
@@ -25,8 +25,10 @@ const cacheFiles = [
 // listen for install event
 
 self.addEventListener('install',function(e){
+  console.log('Service Worker: Installed');
   e.waitUntil(
     caches.open('v1').then(function(cache){
+      console.log('files cached');
       return cache.addAll(cacheFiles);
     })
   );
@@ -34,6 +36,7 @@ self.addEventListener('install',function(e){
 
 // listen for fetch event
 self.addEventListener('fetch',function(e){
+  console.log('Service Worker: Fetching');
   e.respondWith(
     caches.match(e.request).then(function(response){
       if(response){
